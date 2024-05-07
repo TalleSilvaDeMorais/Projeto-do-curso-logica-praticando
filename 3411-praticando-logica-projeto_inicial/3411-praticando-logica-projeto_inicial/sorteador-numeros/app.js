@@ -4,9 +4,7 @@ function sortear (){
     let de = parseInt(document.getElementById('de').value);
     let ate = parseInt(document.getElementById('ate').value);
     
-    alert(`Quantidade: ${quantidade}`);
-    alert(`Do número: ${de}`);
-    alert(`Até o número: ${ate}`);
+   
 
 console.log(quantidade,de,ate);
 
@@ -15,18 +13,46 @@ let numero;
 
 for (let i = 0; i < quantidade; i++) {
     numero = obterNumeroAleatorio(de,ate);
-        sorteados.push(numero);
+
+    //o includes fala se o elemento ja existe dentro de arry, eo while siguinifica que enquanto sorteados existir dentro de numero, ele tem que gerar outro numero
+    while(sorteados.includes(numero)){  
+        numero = obterNumeroAleatorio(de,ate);
+    }
+    
+    sorteados.push(numero);
     }
 
-    alert(sorteados);
 
+    let resultado = document.getElementById('resultado');
+    resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados:  ${sorteados}</label>`;
+
+    alterarStatusBotao();
 }
 
 function obterNumeroAleatorio(min, max){
     return Math.floor(Math.random() * (max - min + 1)) + min;
-
-
-
-
 }
 
+function alterarStatusBotao(){
+    let botao = document.getElementById(`btn-reiniciar`);
+
+    if(botao.classList.contains(`container__botao-desabilitado`)){
+
+        botao.classList.remove(`container__botao-desabilitado`);
+        botao.classList.add(`container__botao`);
+    } else {
+        botao.classList.remove(`container__botao-desabilitado`);
+        botao.classList.add(`container__botao`);
+        }
+
+    }
+
+function reiniciar(){
+    parseInt(document.getElementById('quantidade').value = ``);
+    parseInt(document.getElementById('de').value = ``);
+    parseInt(document.getElementById('ate').value = ``);
+    resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados:  nenhum ate agora</label>`;
+
+    alterarStatusBotao();
+
+}
